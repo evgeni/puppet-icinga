@@ -1,0 +1,17 @@
+{
+  "name": "evgeni-icinga",
+  "version": "0.1.0",
+  "author": "evgeni",
+  "summary": "manage icinga servers and nrpe clients",
+  "license": "BSD",
+  "source": "https://github.com/evgeni/puppet-icinga",
+  "project_page": "https://github.com/evgeni/puppet-icinga",
+  "issues_url": "https://github.com/evgeni/puppet-icinga/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= 1.0.0"
+    }
+  ]
+}
+
