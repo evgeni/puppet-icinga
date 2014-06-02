@@ -40,9 +40,11 @@ class icinga::host {
     group         => 'libs',
   }
 
-  icinga::objects::service { 'kernel':
-    command       => 'check_nrpe_1arg!check_running_kernel',
-    group         => 'kernel',
+  if $::virtual != 'openvzve' {
+    icinga::objects::service { 'kernel':
+      command       => 'check_nrpe_1arg!check_running_kernel',
+      group         => 'kernel',
+    }
   }
 
   icinga::objects::service { 'packages':
@@ -64,11 +66,13 @@ class icinga::host {
     command       => 'check_nrpe_1arg!check_entropy',
   }
 
-  icinga::nrpe::command { 'check_ntp_peer':
-    command_line => '/usr/lib/nagios/plugins/check_ntp_peer -H localhost -w 1 -c 2'
-  }
-  icinga::objects::service { 'ntp':
-    command  => 'check_nrpe_1arg!check_ntp_peer',
+  if $::virtual != 'openvzve' {
+    icinga::nrpe::command { 'check_ntp_peer':
+      command_line => '/usr/lib/nagios/plugins/check_ntp_peer -H localhost -w 1 -c 2'
+    }
+    icinga::objects::service { 'ntp':
+      command  => 'check_nrpe_1arg!check_ntp_peer',
+    }
   }
 
   $a_mounts = split($::mounts, ',')
