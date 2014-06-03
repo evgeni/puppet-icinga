@@ -5,7 +5,6 @@ fixture_path = File.expand_path(File.join(__FILE__, '..', 'fixtures'))
 #require 'mocha'
 require 'puppet'
 require 'rspec-puppet'
-require 'rspec/autorun'
 
 RSpec.configure do |config|
 #    config.mock_with :mocha
