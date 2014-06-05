@@ -5,9 +5,9 @@ rvm:
   - 1.9.3
 
 script:
-  - rake spec
-  - rake lint
-  - rake validate
+  - bundle exec rake spec
+  - bundle exec rake lint
+  - bundle exec rake validate
 
 env:
   - PUPPET_VERSION="2.7.0"
