@@ -12,6 +12,7 @@ describe 'icinga' do
 
       should contain_class('icinga::package')
       should contain_package('icinga')
+      should contain_package('nagios-nrpe-plugin')
 
       should contain_file('/etc/icinga/objects/puppet/')
     }

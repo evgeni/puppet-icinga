@@ -28,5 +28,8 @@ class icinga::package (
     ensure  => $ensure,
   }
 
+  package { 'nagios-nrpe-plugin':
+    ensure  => $ensure,
+  }
 }
 
