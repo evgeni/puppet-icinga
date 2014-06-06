@@ -18,7 +18,7 @@ class icinga::service inherits icinga {
     hasrestart => true,
     restart    => 'service icinga reload',
     hasstatus  => true,
-    require    => File['/etc/icinga/objects/puppet/'],
+    require    => Package['icinga'],
   }
 
 }

@@ -6,7 +6,13 @@ describe 'icinga' do
     } }
     it {
       should contain_class('icinga')
+
       should contain_class('icinga::service')
+      should contain_service('icinga')
+
+      should contain_class('icinga::package')
+      should contain_package('icinga')
+
       should contain_file('/etc/icinga/objects/puppet/')
     }
   end

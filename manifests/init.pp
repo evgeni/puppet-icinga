@@ -39,6 +39,7 @@ class icinga (
   $ensure_running  = hiera('ensure_running', $icinga::params::ensure_running),
 ) inherits icinga::params {
 
+  include icinga::package
   include icinga::service
 
   # Hack for bug #3299 where nagios stuff is root:600
@@ -46,6 +47,7 @@ class icinga (
     ensure  => directory,
     mode    => '0644',
     recurse => true,
+    require => Package['icinga'],
   }
 
   file { '/etc/icinga/objects/puppet/':
