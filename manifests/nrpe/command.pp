@@ -10,7 +10,7 @@ define icinga::nrpe::command(
   $group        = 'root',
   $mode         = '0644',
   $owner        = 'root',
-  $target       = "/etc/nagios/nrpe.d/${command_name}.cfg",
+  $target       = "/etc/nagios/nrpe.d/${name}.cfg",
   ) {
   file { $target:
     ensure  => $ensure,
