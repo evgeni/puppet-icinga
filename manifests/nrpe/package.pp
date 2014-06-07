@@ -24,8 +24,9 @@ class icinga::nrpe::package (
   $ensure = hiera('ensure', $icinga::params::ensure),
 ) inherits icinga::params {
 
-  package { 'nagios-nrpe-server':
+  package { $icinga::params::nrpe_server_package:
     ensure  => $ensure,
+    alias   => 'nrpe-server',
   }
 
   package {

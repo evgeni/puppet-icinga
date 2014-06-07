@@ -13,7 +13,11 @@
 class icinga::params {
 
   case $::osfamily {
-    Debian: { }
+    Debian: {
+      $icinga_package      = 'icinga'
+      $nrpe_plugin_package = 'nagios-nrpe-plugin'
+      $nrpe_server_package = 'nagios-nrpe-server'
+    }
     default: {
       fail('This module only supports Debian-based systems')
     }
