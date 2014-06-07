@@ -33,7 +33,7 @@ class icinga::nrpe::config (
   file { '/etc/nagios/':
     ensure  => directory,
     mode    => '0644',
-    require => Package['nagios-nrpe-server'],
+    require => Package['nrpe-server'],
   }
 
   augeas { 'nrpe.cfg_allowed_hosts':
@@ -41,16 +41,16 @@ class icinga::nrpe::config (
     changes => [
       "set allowed_hosts ${allowed_hosts_string}",
     ],
-    notify  => Service['nagios-nrpe-server'],
+    notify  => Service[$icinga::params::nrpe_service],
     require => File['/etc/nagios/'],
   }
 
-  file { '/etc/nagios/nrpe.d/':
+  file { $icinga::params::nrpe_d_folder:
     ensure  => directory,
     mode    => '0644',
     recurse => true,
     source  => 'puppet:///modules/icinga/etc/nagios/nrpe.d/',
-    notify  => Service['nagios-nrpe-server'],
+    notify  => Service[$icinga::params::nrpe_service],
     require => File['/etc/nagios/'],
   }
 
@@ -62,7 +62,7 @@ class icinga::nrpe::config (
   file { '/etc/sudoers.d/icinga':
     ensure  => $ensure,
     source  => 'puppet:///modules/icinga/etc/sudoers.d/icinga',
-    notify  => Service['nagios-nrpe-server'],
+    notify  => Service[$icinga::params::nrpe_service],
     require => File['/etc/sudoers.d/'],
   }
 

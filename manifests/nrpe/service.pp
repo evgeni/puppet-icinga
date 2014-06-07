@@ -15,11 +15,11 @@ class icinga::nrpe::service (
   $ensure_enable  = hiera('ensure_enable', $icinga::params::ensure_enable),
 ) inherits icinga::params {
 
-  service { 'nagios-nrpe-server':
+  service { $icinga::params::nrpe_service:
     ensure     => $ensure_running,
     enable     => $ensure_enable,
     hasrestart => true,
-    restart    => 'service nagios-nrpe-server reload',
+    restart    => "service ${icinga::params::nrpe_service} reload",
     hasstatus  => true,
     require    => Class['icinga::nrpe::config'],
   }

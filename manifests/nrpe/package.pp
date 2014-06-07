@@ -29,10 +29,7 @@ class icinga::nrpe::package (
     alias   => 'nrpe-server',
   }
 
-  package {
-    [ 'nagios-plugins-basic',
-      'nagios-plugins-standard',
-      'nagios-plugins-contrib' ] :
+  package { $icinga::params::plugins_packages:
     ensure  => $ensure,
   }
 

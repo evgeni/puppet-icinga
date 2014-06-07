@@ -10,7 +10,7 @@ define icinga::nrpe::command(
   $group        = 'root',
   $mode         = '0644',
   $owner        = 'root',
-  $target       = "/etc/nagios/nrpe.d/${name}.cfg",
+  $target       = "${icinga::params::nrpe_d_folder}/${name}.cfg",
   ) {
   file { $target:
     ensure  => $ensure,
@@ -19,7 +19,7 @@ define icinga::nrpe::command(
     mode    => $mode,
     owner   => $owner,
     content => template('icinga/etc/nagios/nrpe.d/command.cfg.erb'),
-    notify  => Service['nagios-nrpe-server'],
-    require => File['/etc/nagios/nrpe.d/'],
+    notify  => Service[$icinga::params::nrpe_service],
+    require => File[$icinga::params::nrpe_d_folder],
   }
 }

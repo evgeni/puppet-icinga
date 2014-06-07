@@ -47,19 +47,21 @@ class icinga::host {
     }
   }
 
-  icinga::objects::service { 'packages':
-    command       => 'check_nrpe_1arg!check_packages',
-    group         => 'packages',
-  }
+  if $::osfamily == 'Debian' {
+    icinga::objects::service { 'packages':
+      command       => 'check_nrpe_1arg!check_packages',
+      group         => 'packages',
+    }
 
   $check_packages_ignore = hiera_array('icinga::host::check_packages_ignore', [])
 
-  file { '/etc/nagios-plugins/obsolete-packages-ignore.d/puppet-icinga-ignores':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    require => Package['nagios-plugins-contrib'],
-    content => template('icinga/etc/nagios-plugins/obsolete-packages-ignore.d/puppet-icinga-ignores.erb'),
+    file { '/etc/nagios-plugins/obsolete-packages-ignore.d/puppet-icinga-ignores':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      require => Package['nagios-plugins-contrib'],
+      content => template('icinga/etc/nagios-plugins/obsolete-packages-ignore.d/puppet-icinga-ignores.erb'),
+    }
   }
 
   icinga::objects::service { 'entropy':
@@ -78,12 +80,12 @@ class icinga::host {
   $a_mounts = split($::mounts, ',')
   $disk_limits = hiera('icinga::host::disk_limits', {})
 
-  file { '/etc/nagios/nrpe.d/disk.cfg':
+  file { "${icinga::params::nrpe_d_folder}/disk.cfg":
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service['nagios-nrpe-server'],
-    require => File['/etc/nagios/nrpe.d/'],
+    notify  => Service[$icinga::params::nrpe_service],
+    require => File[$icinga::params::nrpe_d_folder],
     content => template('icinga/etc/nagios/nrpe.d/disk.cfg.erb'),
   }
   icinga::objects::service_parametrized { $a_mounts:
@@ -93,12 +95,12 @@ class icinga::host {
 
   if $::virtual == 'physical' {
     $a_disks = split($::disks, ',')
-    file { '/etc/nagios/nrpe.d/smart.cfg':
+    file { "${icinga::params::nrpe_d_folder}/smart.cfg":
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      notify  => Service['nagios-nrpe-server'],
-      require => File['/etc/nagios/nrpe.d/'],
+      notify  => Service[$icinga::params::nrpe_service],
+      require => File[$icinga::params::nrpe_d_folder],
       content => template('icinga/etc/nagios/nrpe.d/smart.cfg.erb'),
     }
     icinga::objects::service_parametrized { $a_disks:

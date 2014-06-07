@@ -17,6 +17,21 @@ class icinga::params {
       $icinga_package      = 'icinga'
       $nrpe_plugin_package = 'nagios-nrpe-plugin'
       $nrpe_server_package = 'nagios-nrpe-server'
+      $nrpe_service        = 'nagios-nrpe-server'
+      $nrpe_d_folder       = '/etc/nagios/nrpe.d'
+      $plugins_packages    = [
+                              'nagios-plugins-basic',
+                              'nagios-plugins-standard',
+                              'nagios-plugins-contrib'
+                              ]
+    }
+    RedHat: {
+      $icinga_package      = 'icinga'
+      $nrpe_plugin_package = 'nagios-plugins-nrpe'
+      $nrpe_server_package = 'nrpe'
+      $nrpe_service        = 'nrpe'
+      $nrpe_d_folder       = '/etc/nrpe.d'
+      $plugins_packages    = [ ]
     }
     default: {
       fail('This module only supports Debian-based systems')
