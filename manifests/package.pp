@@ -24,14 +24,18 @@ class icinga::package (
   $ensure = hiera('ensure', $icinga::params::ensure),
 ) inherits icinga::params {
 
-  package { $icinga::params::icinga_package:
+  ensure_packages($icinga::params::icinga_package,
+    {
     ensure  => $ensure,
     alias   => 'icinga',
-  }
+    }
+  )
 
-  package { $icinga::params::nrpe_plugin_package:
+  ensure_packages($icinga::params::nrpe_plugin_package,
+    {
     ensure  => $ensure,
     alias   => 'nrpe-plugin',
-  }
+    }
+  )
 }
 
