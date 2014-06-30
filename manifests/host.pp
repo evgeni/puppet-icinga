@@ -93,7 +93,7 @@ class icinga::host {
     group   => 'fs',
   }
 
-  if $::virtual == 'physical' {
+  if $::is_virtual == 'false' {
     $a_disks = split($::disks, ',')
     file { "${icinga::params::nrpe_d_folder}/smart.cfg":
       owner   => 'root',
