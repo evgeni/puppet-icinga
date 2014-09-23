@@ -24,6 +24,8 @@ class icinga::params {
                               'nagios-plugins-standard',
                               'nagios-plugins-contrib'
                               ]
+      $lmsensors_package   = 'lm-sensors'
+      $binutils_package    = 'binutils'
     }
     RedHat: {
       $icinga_package      = 'icinga'
@@ -32,6 +34,8 @@ class icinga::params {
       $nrpe_service        = 'nrpe'
       $nrpe_d_folder       = '/etc/nrpe.d'
       $plugins_packages    = [ ]
+      $lmsensors_package   = 'lm_sensors'
+      $binutils_package    = 'binutils'
     }
     default: {
       fail('This module only supports Debian-based systems')

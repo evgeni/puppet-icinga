@@ -41,6 +41,7 @@ class icinga::host {
   }
 
   if $::virtual != 'openvzve' {
+    ensure_packages($icinga::params::binutils_package)
     icinga::objects::service { 'kernel':
       command       => 'check_nrpe_1arg!check_running_kernel',
       group         => 'kernel',
@@ -108,6 +109,7 @@ class icinga::host {
       group   => 'disk',
     }
 
+    ensure_packages($icinga::params::lmsensors_package)
     icinga::objects::service { 'sensors':
       command       => 'check_nrpe_1arg!check_sensors',
     }
